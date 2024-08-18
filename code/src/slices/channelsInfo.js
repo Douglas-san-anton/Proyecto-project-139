@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 
 import { createSlice } from '@reduxjs/toolkit';
-import remove from 'lodash/remove';
+import remove from 'lodash/remove.js';
 
 const defaultChannelId = 1;
 

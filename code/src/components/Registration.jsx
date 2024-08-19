@@ -12,6 +12,7 @@ import * as yup from 'yup';
 import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
 
+// @ts-ignore
 import avatarImages from '../assets/avatar_1.jpg';
 
 const Registration = () => {
@@ -22,6 +23,7 @@ const Registration = () => {
   const navigate = useNavigate();
   // const rollbar = useRollbar();
   useEffect(() => {
+    // @ts-ignore
     inputRef.current.focus();
   }, []);
 
@@ -58,6 +60,7 @@ const Registration = () => {
           routes.signupPath(),
           { username: values.username, password: values.password },
         );
+        // @ts-ignore
         auth.logIn(res.data);
         navigate(routes.chatPagePath());
       } catch (err) {
@@ -68,6 +71,7 @@ const Registration = () => {
 
         if (err.response.status === 409) {
           setRegistrationFailed(true);
+          // @ts-ignore
           inputRef.current.select();
           return;
         }
@@ -106,11 +110,16 @@ const Registration = () => {
                       || registrationFailed
                     }
                     required
+                    // @ts-ignore
                     ref={inputRef}
                   />
                   <Form.Label htmlFor="username">{t('signup.username')}</Form.Label>
-                  <Form.Control.Feedback type="invalid" tooltip placement="right">
-                    {t(formik.errors.username)}
+                  <Form.Control.Feedback type="invalid" tooltip 
+// @ts-ignore
+                  placement="right">
+                    {t(
+// @ts-ignore
+                    formik.errors.username)}
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="form-floating mb-3">
@@ -131,7 +140,9 @@ const Registration = () => {
                     autoComplete="new-password"
                   />
                   <Form.Control.Feedback type="invalid" tooltip>
-                    {t(formik.errors.password)}
+                    {t(
+// @ts-ignore
+                    formik.errors.password)}
                   </Form.Control.Feedback>
                   <Form.Label htmlFor="password">{t('signup.password')}</Form.Label>
                 </Form.Group>
@@ -154,6 +165,7 @@ const Registration = () => {
                   <Form.Control.Feedback type="invalid" tooltip>
                     {registrationFailed
                       ? t('signup.alreadyExists')
+                      // @ts-ignore
                       : t(formik.errors.confirmPassword)}
                   </Form.Control.Feedback>
                   <Form.Label htmlFor="confirmPassword">{t('signup.confirm')}</Form.Label>

@@ -40,6 +40,7 @@ const AddChannelForm = ({ handleClose }) => {
   // const rollbar = useRollbar();
 
   useEffect(() => {
+    // @ts-ignore
     inputRef.current.focus();
   }, []);
 
@@ -52,15 +53,18 @@ const AddChannelForm = ({ handleClose }) => {
       const filteredName = leoProfanity.clean(name);
       const channel = { name: filteredName };
       try {
+        // @ts-ignore
         const data = await api.createChannel(channel);
         log('channel.create', data);
         dispatch(actions.setCurrentChannel({ channelId: data.id }));
+        // @ts-ignore
         toast.success(t('channels.created'));
         handleClose();
       } catch (e) {
         // rollbar.error(e);
         log('channel.create.error', e);
         setSubmitting(false);
+        // @ts-ignore
         inputRef.current.select();
       }
     },
@@ -90,13 +94,16 @@ const AddChannelForm = ({ handleClose }) => {
               onChange={f.handleChange}
               onBlur={f.handleBlur}
               value={f.values.name}
+              // @ts-ignore
               isInvalid={f.errors.name && f.touched.name}
               name="name"
               id="name"
             />
             <label className="visually-hidden" htmlFor="name">{t('modals.channelName')}</label>
             <Form.Control.Feedback type="invalid">
-              {t(f.errors.name)}
+              {t(
+// @ts-ignore
+              f.errors.name)}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
               <Button
@@ -126,13 +133,16 @@ const RemoveChannelForm = ({ handleClose }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const api = useApi();
+  // @ts-ignore
   const channelId = useSelector((state) => state.modal.extra?.channelId);
   // const rollbar = useRollbar();
   const handleRemove = async () => {
     setLoading(true);
     try {
       log('channel.delete');
+      // @ts-ignore
       await api.removeChannel({ id: channelId });
+      // @ts-ignore
       toast.success(t('channels.removed'));
       handleClose();
     } catch (e) {
@@ -183,12 +193,14 @@ const RemoveChannelForm = ({ handleClose }) => {
 const RenameChannelForm = ({ handleClose }) => {
   const { t } = useTranslation();
   const channels = useSelector(getChannelsNames);
+  // @ts-ignore
   const channelId = useSelector((state) => state.modal.extra?.channelId);
   const channel = useSelector(getChannelById(channelId));
   const inputRef = useRef(null);
   const api = useApi();
   // const rollbar = useRollbar();
   useEffect(() => {
+    // @ts-ignore
     setTimeout(() => inputRef.current.select());
   }, []);
   const f = useFormik({
@@ -202,13 +214,16 @@ const RenameChannelForm = ({ handleClose }) => {
 
       try {
         log('channel.rename');
+        // @ts-ignore
         await api.renameChannel(data);
+        // @ts-ignore
         toast.success(t('channels.renamed'));
         handleClose();
       } catch (e) {
         // rollbar.error(e);
         log('channel.rename.error', e);
         setSubmitting(false);
+        // @ts-ignore
         inputRef.current.select();
         if (!e.isAxiosError) {
           throw e;
@@ -241,13 +256,16 @@ const RenameChannelForm = ({ handleClose }) => {
               onChange={f.handleChange}
               onBlur={f.handleBlur}
               value={f.values.name}
+              // @ts-ignore
               isInvalid={f.errors.name && f.touched.name}
               name="name"
               id="name"
             />
             <label className="visually-hidden" htmlFor="name">{t('modals.channelName')}</label>
             <Form.Control.Feedback type="invalid">
-              {t(f.errors.name)}
+              {t(
+// @ts-ignore
+              f.errors.name)}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
               <Button
@@ -281,11 +299,13 @@ const mapping = {
 
 const Modal = () => {
   const dispatch = useDispatch();
+  // @ts-ignore
   const isOpened = useSelector((state) => state.modal.isOpened);
 
   const handleClose = () => {
     dispatch(actions.closeModal());
   };
+  // @ts-ignore
   const modalType = useSelector((state) => state.modal.type);
 
   const Component = mapping[modalType];

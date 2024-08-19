@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 
 import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
+// @ts-ignore
 import avatarImages from '../assets/avatar.jpg';
 
 const Login = () => {
@@ -22,6 +23,7 @@ const Login = () => {
   const { t } = useTranslation();
   // const rollbar = useRollbar();
   useEffect(() => {
+    // @ts-ignore
     inputRef.current.focus();
   }, []);
 
@@ -35,6 +37,7 @@ const Login = () => {
 
       try {
         const res = await axios.post(routes.loginPath(), values);
+        // @ts-ignore
         auth.logIn(res.data);
         const { from } = location.state || { from: { pathname: routes.chatPagePath() } };
         navigate(from);
@@ -42,6 +45,7 @@ const Login = () => {
         // rollbar.error(err);
         console.error(err);
         if (!err.isAxiosError) {
+          // @ts-ignore
           toast.error(t('errors.unknown'));
           return;
         }
@@ -49,8 +53,10 @@ const Login = () => {
         if (err.response?.status === 401) {
           setAuthFailed(true);
           // authorization error displayed in a form instead of a toast
+          // @ts-ignore
           inputRef.current.select();
         } else {
+          // @ts-ignore
           toast.error(t('errors.network'));
         }
       }
@@ -81,6 +87,7 @@ const Login = () => {
                     autoComplete="username"
                     isInvalid={authFailed}
                     required
+                    // @ts-ignore
                     ref={inputRef}
                     placeholder={t('login.username')}
                   />

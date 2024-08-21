@@ -7,7 +7,6 @@ import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
-// import { useRollbar } from '@rollbar/react';
 
 import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
@@ -61,7 +60,7 @@ const Registration = () => {
         auth.logIn(res.data);
         navigate(routes.chatPagePath());
       } catch (err) {
-        // rollbar.error(err);
+
         if (!err.isAxiosError) {
           throw err;
         }

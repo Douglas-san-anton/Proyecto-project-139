@@ -5,7 +5,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-// import { useRollbar } from '@rollbar/react';
 
 import ChannelsBox from './ChannelsBox.jsx';
 import ChatBox from './ChatBox.jsx';
@@ -20,7 +19,6 @@ const ChatPage = () => {
   const [fetching, setFetching] = useState(true);
   const navigate = useNavigate();
   const auth = useAuth();
-  // const rollbar = useRollbar();
   useEffect(() => {
     let didMount = true; // eslint-disable-line
     const fetchData = async () => {
@@ -29,7 +27,6 @@ const ChatPage = () => {
         if (didMount) setFetching(false);
         dispatch(actions.setInitialState(res.data));
       } catch (err) {
-        // rollbar.error(err);
         if (!err.isAxiosError) {
           toast.error(t('errors.unknown'));
           return;

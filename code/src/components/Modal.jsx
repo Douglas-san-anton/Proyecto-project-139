@@ -10,7 +10,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-// import { useRollbar } from '@rollbar/react';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
 
@@ -37,7 +36,6 @@ const AddChannelForm = ({ handleClose }) => {
   const api = useApi();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  // const rollbar = useRollbar();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -58,7 +56,6 @@ const AddChannelForm = ({ handleClose }) => {
         toast.success(t('channels.created'));
         handleClose();
       } catch (e) {
-        // rollbar.error(e);
         log('channel.create.error', e);
         setSubmitting(false);
         inputRef.current.select();
@@ -127,7 +124,6 @@ const RemoveChannelForm = ({ handleClose }) => {
   const [loading, setLoading] = useState(false);
   const api = useApi();
   const channelId = useSelector((state) => state.modal.extra?.channelId);
-  // const rollbar = useRollbar();
   const handleRemove = async () => {
     setLoading(true);
     try {
@@ -187,7 +183,6 @@ const RenameChannelForm = ({ handleClose }) => {
   const channel = useSelector(getChannelById(channelId));
   const inputRef = useRef(null);
   const api = useApi();
-  // const rollbar = useRollbar();
   useEffect(() => {
     setTimeout(() => inputRef.current.select());
   }, []);

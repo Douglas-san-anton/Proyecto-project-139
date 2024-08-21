@@ -7,7 +7,6 @@ import { Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-// import { useRollbar } from '@rollbar/react';
 
 import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
@@ -20,7 +19,6 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  // const rollbar = useRollbar();
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -39,7 +37,6 @@ const Login = () => {
         const { from } = location.state || { from: { pathname: routes.chatPagePath() } };
         navigate(from);
       } catch (err) {
-        // rollbar.error(err);
         console.error(err);
         if (!err.isAxiosError) {
           toast.error(t('errors.unknown'));
@@ -48,7 +45,6 @@ const Login = () => {
 
         if (err.response?.status === 401) {
           setAuthFailed(true);
-          // authorization error displayed in a form instead of a toast
           inputRef.current.select();
         } else {
           toast.error(t('errors.network'));

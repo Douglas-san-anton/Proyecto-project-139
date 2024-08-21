@@ -7,7 +7,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
-// import { useRollbar } from '@rollbar/react';
 
 import getLogger from '../lib/logger.js';
 import { useApi, useAuth } from '../hooks/index.js';
@@ -19,7 +18,6 @@ const NewMessageForm = ({ channel }) => {
   const { user: { username } } = useAuth();
   const inputRef = useRef(null);
   const api = useApi();
-  // const rollbar = useRollbar();
 
   const validationSchema = yup.object().shape({
     body: yup

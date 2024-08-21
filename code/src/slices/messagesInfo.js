@@ -12,7 +12,6 @@ const slice = createSlice({
   reducers: {
     addMessage(state, { payload }) {
       const { message } = payload;
-      // @ts-ignore
       state.messages.push(message);
     },
   },
@@ -20,7 +19,6 @@ const slice = createSlice({
     builder
       .addCase(channelsInfoActions.removeChannel, (state, { payload }) => {
         const { channelId } = payload;
-        // @ts-ignore
         remove(state.messages, (message) => message.channelId === channelId);
       })
       .addCase(channelsInfoActions.setInitialState, (state, { payload }) => {

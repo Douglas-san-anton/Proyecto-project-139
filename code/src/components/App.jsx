@@ -21,7 +21,6 @@ import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
 
 const AuthProvider = ({ children }) => {
-  // @ts-ignore
   const currentUser = JSON.parse(localStorage.getItem('user'));
   const [user, setUser] = useState(currentUser ? { username: currentUser.username } : null);
   const logIn = (userData) => {
@@ -35,7 +34,6 @@ const AuthProvider = ({ children }) => {
   };
 
   const getAuthHeader = () => {
-    // @ts-ignore
     const userData = JSON.parse(localStorage.getItem('user'));
 
     return userData?.token ? { Authorization: `Bearer ${userData.token}` } : {};
@@ -53,14 +51,11 @@ const AuthProvider = ({ children }) => {
 
 const PrivateOutlet = () => {
   const auth = useAuth();
-  // @ts-ignore
   return auth.user ? <Outlet /> : <Navigate to={routes.loginPagePath()} />;
 };
 
 const App = () => (
-  <
-    // @ts-ignore
-    AuthProvider>
+  <AuthProvider>
     <Router>
       <div className="d-flex flex-column h-100">
         <Navbar />

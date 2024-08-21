@@ -1,10 +1,13 @@
-// @ts-nocheck
+// @ts-check
 
 import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
+// import Rollbar from 'rollbar';
+// TODO: uncomment rollbar when it's updated to version 18
+// import { Provider as RollbarProvider } from '@rollbar/react';
 import leoProfanity from 'leo-profanity';
 
 import { ApiContext } from './contexts/index.js';
@@ -17,8 +20,10 @@ import badWords from './locales/badWords.js';
 const logSocket = getLogger('socket');
 
 export default async (socket) => {
+  // const isProduction = process.env.NODE_ENV === 'production';
 
-  // @ts-ignore
+  // новые слова для фильтрации нецензурщины в этой либе можно добавить глобально
+  // вероятно это плохо. TODO: возоможно стоит сделать пр в эту либу или найти другую
   const ruDict = leoProfanity.getDictionary('en');
   leoProfanity.add(ruDict);
   leoProfanity.add(badWords);
@@ -55,6 +60,7 @@ export default async (socket) => {
     reducer,
   });
 
+  // Работа с сокетами вне реакта, это уровень инициализации приложения
   socket.on('newMessage', (payload) => {
     logSocket('newMessage', payload);
     store.dispatch(actions.addMessage({ message: payload }));
@@ -75,8 +81,10 @@ export default async (socket) => {
     }));
   });
 
+  // создаём инстанс для возможности запускать приложение многократно (в тестах или при SSR)
   const i18n = i18next.createInstance();
 
+  // i18n инициализируется асинхронно
   await i18n
     .use(initReactI18next)
     .init({
@@ -84,6 +92,19 @@ export default async (socket) => {
       fallbackLng: 'en',
     });
 
+  // Rollbar включаем только для продакшна,
+  // секреты в коде не храним, храним их в переменных окружения, .env должен быть в .gitignore
+  // const rollbarConfig = {
+  //   enabled: isProduction,
+  //   accessToken: process.env.ROLLBAR_TOKEN,
+  //   captureUncaught: true,
+  //   captureUnhandledRejections: true,
+  // };
+
+  // Возможен вариант с прокидыванием инстанса ролбара
+  // const rollbar = new Rollbar(rollbarConfig);
+
+  // Статические данные через контекст
   const vdom = (
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>

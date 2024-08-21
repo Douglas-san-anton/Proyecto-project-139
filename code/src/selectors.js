@@ -1,5 +1,9 @@
 // @ts-check
 
+// import getLogger from '../lib/logger.js';
+
+// const log = getLogger('selector');
+
 export const channelsInfo = (state) => state.channelsInfo;
 
 export const getCurrentChannel = (state) => {

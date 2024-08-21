@@ -28,15 +28,12 @@ const Channel = ({
               key={channel.id}
               className="w-100 rounded-0 text-start text-truncate"
               onClick={handleChoose}
-              // @ts-ignore
               variant={variant}
             >
               <span className="me-1">#</span>
               {channel.name}
             </Button>
-            <Dropdown.Toggle split className="flex-grow-0" 
-// @ts-ignore
-            variant={variant}>
+            <Dropdown.Toggle split className="flex-grow-0" variant={variant}>
               <span className="visually-hidden">{t('channels.menu')}</span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -48,7 +45,6 @@ const Channel = ({
         : (
           <Button
             type="button"
-            // @ts-ignore
             variant={variant}
             key={channel.id}
             className="w-100 rounded-0 text-start"
@@ -65,7 +61,6 @@ const Channel = ({
 const ChannelsBox = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  // @ts-ignore
   const { channels, currentChannelId } = useSelector((state) => state.channelsInfo);
   const handleChooseChannel = (channelId) => () => {
     dispatch(actions.setCurrentChannel({ channelId }));

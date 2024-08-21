@@ -16,7 +16,6 @@ const log = getLogger('client');
 
 const NewMessageForm = ({ channel }) => {
   const { t } = useTranslation();
-  // @ts-ignore
   const { user: { username } } = useAuth();
   const inputRef = useRef(null);
   const api = useApi();
@@ -42,7 +41,6 @@ const NewMessageForm = ({ channel }) => {
 
       try {
         log('message.send');
-        // @ts-ignore
         await api.sendMessage(message);
         f.resetForm();
       } catch (err) {
@@ -50,14 +48,12 @@ const NewMessageForm = ({ channel }) => {
         log('message.send.error', err);
       }
       f.setSubmitting(false);
-      // @ts-ignore
       inputRef.current.focus();
     },
     validateOnBlur: false,
   });
 
   useEffect(() => {
-    // @ts-ignore
     inputRef.current.focus();
   }, [channel]);
 
